@@ -13,11 +13,10 @@
           id="familySelector"
           class="form-select flex-grow-1 w-25"
         >
-          <option value="" selected disabled>Family</option>
-          <option value="Acanthuridae">Acanthuridae</option>
-          <option value="Pomacanthidae">Pomacanthidae</option>
-          <option value="Scaridae">Scaridae</option>
-          <option value="Serranidae">Serranidae</option>
+          <option value="" selected>Family</option>
+          <option *ngFor="let family of families" [value]="family">
+            {{ family }}
+          </option>
         </select>
 
         <select
@@ -25,10 +24,10 @@
           id="statusSelector"
           class="form-select flex-grow-1 w-25"
         >
-          <option value="" selected disabled>Status</option>
-          <option value="CREATED">Created</option>
-          <option value="DRAFT">Draft</option>
-          <option value="PUBLISHED">Published</option>
+          <option value="" selected>Status</option>
+          <option *ngFor="let genus of genusList" [value]="genus">
+            {{ genus }}
+          </option>
         </select>
       </form>
     </div>
@@ -46,7 +45,7 @@
       </div>
     </div>
   </div>
-  <div class="row mt-4">
+  <div id="table-species" class="row mt-4">
     <div class="col-12">
       <div class="table-responsive rounded-4 bg-light-subtle p-2">
         <table
@@ -62,43 +61,33 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th class="fw-normal">Acanthurus chirurgus</th>
-              <td>Acanthuridae</td>
-              <td>
-                <span class="badge-locations">📍 5</span>
-              </td>
-              <td>
-                <span class="badge-status published">PUBLISHED</span>
-              </td>
-              <td>
-                <button class="btn-edit mx-1" aria-label="Edit"><a routerLink="edit">✏️</a></button>
-                <button class="btn-delete mx-1" aria-label="Delete">🗑️</button>
-              </td> 
-            </tr>
-            <tr>
-              <th class="fw-normal">Holacanthus ciliaris</th>
-              <td>Pomacanthidae</td>
-              <td>
-                <span class="badge-locations">📍 3</span>
-              </td>
-              <td>
-                <span class="badge-status draft">DRAFT</span>
-              </td>
-              <td>
-                <button class="btn-edit mx-1" aria-label="Edit"><a routerLink="edit">✏️</a></button>
-                <button class="btn-delete mx-1" aria-label="Delete">🗑️</button>
-              </td>
-            </tr>
+            @for (specie of species; track specie.id) {
+              <tr>
+                <th class="fw-normal">{{ specie.scientificName }}</th>
+                <td>{{ specie.family }}</td>
+                <td>
+                  <span class="badge-locations"
+                    >📍 {{ specie.coordinates.length }}</span
+                  >
+                </td>
+                <td>
+                  <span class="badge-status published">
+                    {{ specie.status }}</span
+                  >
+                </td>
+                <td>
+                  <button class="btn-edit mx-1" aria-label="Edit">
+                    <a [routerLink]="['edit/', specie.id]">✏️</a>
+                  </button>
+                  <button class="btn-delete mx-1" aria-label="Delete">
+                    🗑️
+                  </button>
+                </td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
-    </div>
-  </div>
-
-  <div class="row mt-3">
-    <div class="col-12">
-      <p class="text-center text-muted mb-0">Page 1 of 50 &lt; [1] [2] &gt;</p>
     </div>
   </div>
 </section>

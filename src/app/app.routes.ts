@@ -8,7 +8,7 @@ export const routes: Routes = [
     title: "Home"
   },
   {
-    path: "edit",
+    path: "edit/:speciesId",
     component: SpeciesEditComponent,
     title: "Detail",
   }

@@ -1,140 +1,126 @@
 <section class="container my-4 flex-column">
   <div class="row g-3 px-3 bg-white">
-    <form class="d-flex py-2" action="">
-      <div id="detail" class="col-6 mx-1">
-        <div>
-          <p class="my-2">Scientific Name</p>
-          <input
-            type="text"
-            name="scientifName"
-            class="form-control"
-            value="Acanthurus chirugus"
-          />
-          <p class="my-2">Common Name</p>
-          <input
-            type="text"
-            name="scientifName"
-            class="form-control"
-            value="Doctorfish"
-          />
-          <p class="my-2">Family</p>
-          <select
-            name="familySelector"
-            id="familySelector"
-            class="form-select my-2"
-          >
-            <option value="" selected disabled>Family</option>
-            <option value="Acanthuridae">Acanthuridae</option>
-            <option value="Pomacanthidae">Pomacanthidae</option>
-            <option value="Scaridae">Scaridae</option>
-            <option value="Serranidae">Serranidae</option>
-          </select>
-          <p class="my-2">Genus</p>
-          <select
-            name="genusSelector"
-            id="genusSelector"
-            class="form-select my-2"
-          >
-            <option value="" selected disabled>Genus</option>
-            <option value="Acanthurus">Acanthurus</option>
-            <option value="Holacanthus">Holacanthus</option>
-            <option value="Sparisoma">Sparisoma</option>
-            <option value="Epinephelus">Epinephelus</option>
-          </select>
-        </div>
-        <hr />
-        <div id="imageEdit">
-          <p>Image URL</p>
-          <input
-            class="form-control"
-            type="text"
-            value="https://dummyimage.com/180x180/cccccc/ffffff&text=Doctorfish"
-          />
-          <img
-            class="m-3"
-            src="https://dummyimage.com/180x180/cccccc/ffffff&text=Doctorfish"
-            alt=""
-          />
-        </div>
-      </div>
-      <div class="col-5 mx-3">
-        <div id="coodinateEdit">
+    @if (specie) {
+      <form class="d-flex py-2" action="">
+        <div id="detail" class="col-6 mx-1">
           <div>
-            <p>Locations (list of coordinates)</p>
-            <table class="table">
-              <thead>
-                <th>#</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Actions</th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>18.2208°N</td>
-                  <td>66.5901°W</td>
-                  <td>
-                    <button class="btn-edit mx-1" aria-label="Edit">
-                      <a routerLink="edit">✏️</a>
-                    </button>
-                    <button class="btn-delete mx-1" aria-label="Delete">
-                      🗑️
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>18.2315°N</td>
-                  <td>66.6103°W</td>
-                  <td>
-                    <button class="btn-edit mx-1" aria-label="Edit">
-                      <a routerLink="edit">✏️</a>
-                    </button>
-                    <button class="btn-delete mx-1" aria-label="Delete">
-                      🗑️
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <p class="my-2">Scientific Name</p>
+            <input
+              type="text"
+              name="scientifName"
+              class="form-control"
+              value="{{ specie.scientificName }}"
+            />
+            <p class="my-2">Common Name</p>
+            <input
+              type="text"
+              name="scientifName"
+              class="form-control"
+              value="{{ specie.commonName }}"
+            />
+            <p class="my-2">Family</p>
+            <select
+              name="familySelector"
+              id="familySelector"
+              class="form-select my-2"
+              [(ngModel)]="specie.family"
+            >
+              <option *ngFor="let family of families" [value]="family">
+                {{ family }}
+              </option>
+            </select>
+            <p class="my-2">Genus</p>
+            <select
+              name="genusSelector"
+              id="genusSelector"
+              class="form-select my-2"
+              [(ngModel)]="specie.genus"
+            >
+              <option *ngFor="let genus of genusList" [value]="genus">
+                {{ genus }}
+              </option>
+            </select>
           </div>
           <hr />
-          <div class="my-3">
-            <p>Add a new coordinate:</p>
+          <div id="imageEdit">
+            <p>Image URL</p>
             <input
-              class="form-input col-3 mx-2"
+              class="form-control"
               type="text"
-              name="latitude"
-              id="coordinateLatitude"
-              placeholder="latitude"
+              value="https://dummyimage.com/180x180/cccccc/ffffff&text=Doctorfish"
             />
-            <input
-              class="col-3 mx-2"
-              type="text"
-              name="longitude"
-              id="coordinateLongitude"
-              placeholder="longitude"
+            <img
+              class="m-3"
+              src="https://dummyimage.com/180x180/cccccc/ffffff&text=Doctorfish"
+              alt=""
             />
-            <button class="btn btn-success">Add coordinate</button>
-          </div>
-          <hr />
-          <div class="my-3">
-            <p>📍 Map Coordinates</p>
-            <iframe
-              src="https://www.openstreetmap.org/export/embed.html?bbox=-70.0%2C18.0%2C-65.0%2C22.0&layer=mapnik&marker=18.2208°%2C-66.5901"
-              width="100%"
-              height="150"
-              style="border: 1px solid #ddd; border-radius: 8px"
-              allowfullscreen
-              loading="lazy"
-            ></iframe>
           </div>
         </div>
-        <div class="d-flex justify-content-end">
-          <button class="btn btn-success mx-3">Save</button>
-          <a href="" class="btn btn-danger">Cancel</a>
+        <div class="col-5 mx-3">
+          <div id="coodinateEdit">
+            <div>
+              <p>Locations (list of coordinates)</p>
+              <table class="table">
+                <thead>
+                  <th>#</th>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                  <th>Actions</th>
+                </thead>
+                <tbody>
+                  @for (coordinate of specie.coordinates; track coordinate.id) {
+                  <tr>
+                    <td>{{ coordinate.id }}</td>
+                    <td>{{ coordinate.latitude}}°</td>
+                    <td>{{ coordinate.longitude }}°</td>
+                    <td>
+                      <button class="btn-delete mx-1" aria-label="Delete">
+                        🗑️
+                      </button>
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            <hr />
+            <div class="my-3">
+              <p>Add a new coordinate:</p>
+              <input
+                class="form-input col-3 mx-2"
+                type="text"
+                name="latitude"
+                id="coordinateLatitude"
+                placeholder="latitude"
+              />
+              <input
+                class="col-3 mx-2"
+                type="text"
+                name="longitude"
+                id="coordinateLongitude"
+                placeholder="longitude"
+              />
+              <button class="btn btn-success">Add coordinate</button>
+            </div>
+            <hr />
+            <div class="my-3">
+              <p>📍 Map Coordinates</p>
+              <iframe
+                src="https://www.openstreetmap.org/export/embed.html?bbox=-70.0%2C18.0%2C-65.0%2C22.0&layer=mapnik&marker=18.2208°%2C-66.5901"
+                width="100%"
+                height="150"
+                style="border: 1px solid #ddd; border-radius: 8px"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-success mx-3">Save</button>
+            <a href="" class="btn btn-danger">Cancel</a>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    }
   </div>
 </section>

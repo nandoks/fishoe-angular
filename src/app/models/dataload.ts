@@ -13,9 +13,9 @@ export const species: Species[] = [
         status: Status.PUBLISHED,
         imageUrl: 'https://dummyimage.com/600x400/2c3e50/ffffff&text=Doctorfish',
         coordinates: [
-            { id: 1, latitude: 18.2208, longitude: -66.5901, localityName: 'Puerto Rico Trench' },
-            { id: 2, latitude: 18.2315, longitude: -66.6103, localityName: 'Dominican Republic' },
-            { id: 3, latitude: 18.2450, longitude: -66.5850, localityName: 'Belize Barrier Reef' }
+            { id: 1, latitude: "18.2208", longitude: "-66.5901", localityName: 'Puerto Rico Trench' },
+            { id: 2, latitude: "18.2315", longitude: "-66.6103", localityName: 'Dominican Republic' },
+            { id: 3, latitude: "18.2450", longitude: "-66.5850", localityName: 'Belize Barrier Reef' }
         ]
     },
     {
@@ -29,9 +29,9 @@ export const species: Species[] = [
         status: Status.PUBLISHED,
         imageUrl: 'https://dummyimage.com/600x400/16a085/ffffff&text=Queen+Angelfish',
         coordinates: [
-            { id: 4, latitude: 19.2208, longitude: -67.5901, localityName: 'Florida Keys' },
-            { id: 5, latitude: 20.2315, longitude: -68.6103, localityName: 'Cuba' },
-            { id: 6, latitude: 21.2450, longitude: -69.5850, localityName: 'Bahamas' }
+            { id: 4, latitude: "19.2208", longitude: "-67.5901", localityName: 'Florida Keys' },
+            { id: 5, latitude: "20.2315", longitude: "-68.6103", localityName: 'Cuba' },
+            { id: 6, latitude: "21.2450", longitude: "-69.5850", localityName: 'Bahamas' }
         ]
     },
     {
@@ -45,8 +45,8 @@ export const species: Species[] = [
         status: Status.DRAFT,
         imageUrl: 'https://dummyimage.com/600x400/27ae60/ffffff&text=Parrotfish',
         coordinates: [
-            { id: 7, latitude: 18.2000, longitude: -65.5000, localityName: 'St. Croix, USVI' },
-            { id: 8, latitude: 18.3000, longitude: -64.8000, localityName: 'British Virgin Islands' }
+            { id: 7, latitude: "18.2000", longitude: "-65.5000", localityName: 'St. Croix, USVI' },
+            { id: 8, latitude: "18.3000", longitude: "-64.8000", localityName: 'British Virgin Islands' }
         ]
     },
     {
@@ -60,10 +60,10 @@ export const species: Species[] = [
         status: Status.PUBLISHED,
         imageUrl: 'https://dummyimage.com/600x400/e67e22/ffffff&text=Puffer',
         coordinates: [
-            { id: 9, latitude: 19.5000, longitude: -70.5000, localityName: 'Turks and Caicos' },
-            { id: 10, latitude: 20.0000, longitude: -71.5000, localityName: 'Haiti' },
-            { id: 11, latitude: 20.5000, longitude: -72.5000, localityName: 'Bahamas' },
-            { id: 12, latitude: 21.0000, longitude: -73.5000, localityName: 'Miami, Florida' }
+            { id: 9, latitude:  "19.5000", longitude: "-70.5000", localityName: 'Turks and Caicos' },
+            { id: 10, latitude: "20.0000", longitude: "-71.5000", localityName: 'Haiti' },
+            { id: 11, latitude: "20.5000", longitude: "-72.5000", localityName: 'Bahamas' },
+            { id: 12, latitude: "21.0000", longitude: "-73.5000", localityName: 'Miami, Florida' }
         ]
     },
     {
@@ -77,8 +77,6 @@ export const species: Species[] = [
         status: Status.DRAFT,
         imageUrl: 'https://dummyimage.com/600x400/8e44ad/ffffff&text=Grouper',
         coordinates: [
-            { id: 13, latitude: 18.2000, longitude: -76.0000, localityName: 'Jamaica' },
-            { id: 14, latitude: 19.0000, longitude: -77.0000, localityName: 'Cayman Islands' }
         ]
     }
 ];
