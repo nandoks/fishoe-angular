@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+
+import { RouterLink } from "@angular/router";
 @Component({
   selector: 'app-header',
-  imports: [FaIconComponent,],
+  imports: [RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
