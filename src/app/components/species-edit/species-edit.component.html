@@ -1,1 +1,137 @@
-<p>species-edit works!</p>
+<section class="container my-4 flex-column">
+  <div class="row g-3 px-3 bg-white">
+    <div id="detail" class="col-5 mx-1">
+      <form action="">
+        <p class="my-2">Scientific Name</p>
+        <input
+          type="text"
+          name="scientifName"
+          class="form-control"
+          value="Acanthurus chirugus"
+        />
+        <p class="my-2">Common Name</p>
+        <input
+          type="text"
+          name="scientifName"
+          class="form-control"
+          value="Doctorfish"
+        />
+        <p class="my-2">Family</p>
+        <select
+          name="familySelector"
+          id="familySelector"
+          class="form-select my-2"
+        >
+          <option value="" selected disabled>Family</option>
+          <option value="Acanthuridae">Acanthuridae</option>
+          <option value="Pomacanthidae">Pomacanthidae</option>
+          <option value="Scaridae">Scaridae</option>
+          <option value="Serranidae">Serranidae</option>
+        </select>
+        <p class="my-2">Genus</p>
+        <select
+          name="genusSelector"
+          id="genusSelector"
+          class="form-select my-2"
+        >
+          <option value="" selected disabled>Genus</option>
+          <option value="Acanthurus">Acanthurus</option>
+          <option value="Holacanthus">Holacanthus</option>
+          <option value="Sparisoma">Sparisoma</option>
+          <option value="Epinephelus">Epinephelus</option>
+        </select>
+      </form>
+    </div>
+    <div class="col-5 mx-1">
+      <div id="imageEdit">
+        <form class="flex">
+          <p>Image URL</p>
+          <input
+            class="form-control"
+            type="text"
+            value="https://dummyimage.com/180x180/cccccc/ffffff&text=Doctorfish"
+          />
+          <img
+            class="m-3"
+            src="https://dummyimage.com/180x180/cccccc/ffffff&text=Doctorfish"
+            alt=""
+          />
+        </form>
+      </div>
+      <div id="coodinateEdit">
+        <div>
+          <p>Locations (list of coordinates)</p>
+          <table class="table">
+            <thead>
+              <th>#</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Actions</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>18.2208°N</td>
+                <td>66.5901°W</td>
+                <td>
+                  <button class="btn-edit mx-1" aria-label="Edit">
+                    <a routerLink="edit">✏️</a>
+                  </button>
+                  <button class="btn-delete mx-1" aria-label="Delete">
+                    🗑️
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>18.2315°N</td>
+                <td>66.6103°W</td>
+                <td>
+                  <button class="btn-edit mx-1" aria-label="Edit">
+                    <a routerLink="edit">✏️</a>
+                  </button>
+                  <button class="btn-delete mx-1" aria-label="Delete">
+                    🗑️
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr />
+        <div class="my-3">
+          <form id="newCoordinate" action="">
+            <p>Add a new coordinate:</p>
+            <input
+              class="form-input col-3 mx-2"
+              type="text"
+              name="latitude"
+              id="coordinateLatitude"
+              placeholder="latitude"
+            />
+            <input
+              class="col-3 mx-2"
+              type="text"
+              name="longitude"
+              id="coordinateLongitude"
+              placeholder="longitude"
+            />
+            <button class="btn btn-success">Add coordinate</button>
+          </form>
+        </div>
+        <hr />
+        <div class="my-3">
+          <p>📍 Map Coordinates</p>
+          <iframe
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-70.0%2C18.0%2C-65.0%2C22.0&layer=mapnik&marker=18.2208°%2C-66.5901"
+            width="100%"
+            height="150"
+            style="border: 1px solid #ddd; border-radius: 8px"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
