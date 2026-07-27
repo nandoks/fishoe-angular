@@ -1,8 +1,13 @@
 <section class="container my-4 flex-column">
+  <div id="title" class="col-12 col-md-8 col-lg-9 mb-3 py-2">
+    <h2>Edit Species </h2>
+  </div>
   <div class="row g-3 px-3 bg-white">
     @if (specie) {
-      <form class="d-flex flex-column flex-lg-row py-2" action="">
-        <div id="detail" class="col-12 col-lg-6 mx-1">
+      <div id="detail" class="col-12 col-lg-6 mx-1">
+        <h3>Details:</h3>
+        <hr>
+        <form class="py-2" action="">
           <div>
             <p class="my-2">Scientific Name</p>
             <input
@@ -40,6 +45,17 @@
                 {{ genus }}
               </option>
             </select>
+            <p class="my-2">Status</p>
+            <select
+              name="statusSelector"
+              id="statusSelector"
+              class="form-select my-2"
+              [(ngModel)]="specie.status"
+            >
+              <option *ngFor="let status of statusList" [value]="status">
+                {{ status }}
+              </option>
+            </select>
           </div>
           <hr />
           <div id="imageEdit">
@@ -55,78 +71,29 @@
               alt=""
             />
           </div>
-        </div>
-        <div class="col-12 col-lg-5 mx-3">
-          <div id="coodinateEdit">
-            <div>
-              <p>Locations (list of coordinates)</p>
-              <div class="table-responsive">
-                <table class="table">
-                  <thead>
-                    <th>#</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                    <th>Actions</th>
-                  </thead>
-                  <tbody>
-                    @for (coordinate of specie.coordinates; track coordinate.id) {
-                    <tr>
-                      <td>{{ coordinate.id }}</td>
-                      <td>{{ coordinate.latitude}}°</td>
-                      <td>{{ coordinate.longitude }}°</td>
-                      <td>
-                        <button class="btn-delete mx-1" aria-label="Delete">
-                          🗑️
-                        </button>
-                      </td>
-                    </tr>
-                    }
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <hr />
-            <div class="my-3">
-              <p>Add a new coordinate:</p>
-              <div class="d-flex flex-column flex-sm-row gap-2">
-                <input
-                  class="form-control flex-grow-1"
-                  type="text"
-                  name="latitude"
-                  id="coordinateLatitude"
-                  placeholder="latitude"
-                />
-                <input
-                  class="form-control flex-grow-1"
-                  type="text"
-                  name="longitude"
-                  id="coordinateLongitude"
-                  placeholder="longitude"
-                />
-                <button class="btn btn-success flex-grow-1 flex-sm-grow-0">
-                  Add coordinate
-                </button>
-              </div>
-            </div>
-            <hr />
-            <div class="my-3">
-              <p>📍 Map Coordinates</p>
-              <div class="ratio ratio-4x3">
-                <iframe
-                  src="https://www.openstreetmap.org/export/embed.html?bbox=-70.0%2C18.0%2C-65.0%2C22.0&layer=mapnik&marker=18.2208°%2C-66.5901"
-                  style="border: 1px solid #ddd; border-radius: 8px; width: 100%; height: 100%;"
-                  allowfullscreen
-                  loading="lazy"
-                ></iframe>
-              </div>
-            </div>
-          </div>
           <div class="d-flex flex-wrap gap-2 justify-content-end">
             <button class="btn btn-success">Save</button>
             <a routerLink="/species" class="btn btn-danger">Cancel</a>
           </div>
+        </form>
+      </div>
+      <div class="col-12 col-lg-5 mx-3">
+        <h3>Coordinates:</h3>
+        <hr>
+        <div id="coodinateEdit">
+          <div class="my-3">
+              <app-coordinates-list [coordinates]="specie.coordinates"></app-coordinates-list>
+          </div>
+          <hr />
+          <div class="my-3">
+            <app-coordinate-form></app-coordinate-form>
+          </div>
+          <hr />
+          <div class="my-3">
+            <app-coordinate-map></app-coordinate-map>
+          </div>
         </div>
-      </form>
+      </div>
     }
   </div>
 </section>

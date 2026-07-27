@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { species } from '../../models/dataload';
 import { Species } from '../../models/species';
@@ -12,6 +12,7 @@ import { NgFor } from '@angular/common';
   styleUrl: './search-listing.component.scss'
 })
 export class SearchListingComponent implements OnInit{
+
   species: Species[] = species
   families = Object.values(Family).sort();
   genusList = Object.values(Genus).sort();

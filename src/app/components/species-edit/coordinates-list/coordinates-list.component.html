@@ -1,1 +1,25 @@
-<p>coordinates-list works!</p>
+<div>
+  <p>Locations (list of coordinates)</p>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <th>#</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        @for (coordinate of coordinates; track coordinate.id) {
+          <tr>
+            <td>{{ coordinate.id }}</td>
+            <td>{{ coordinate.latitude }}°</td>
+            <td>{{ coordinate.longitude }}°</td>
+            <td>
+              <button class="btn-delete mx-1" aria-label="Delete">🗑️</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

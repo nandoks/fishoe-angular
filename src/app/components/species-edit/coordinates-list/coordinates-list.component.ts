@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
+import { Coordinate } from '../../../models/corodinates';
 
 @Component({
   selector: 'app-coordinates-list',
@@ -7,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './coordinates-list.component.scss'
 })
 export class CoordinatesListComponent {
+  @Input() coordinates: Coordinate[] = [];
 
 }

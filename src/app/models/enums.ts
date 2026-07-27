@@ -1,7 +1,7 @@
 
 export enum Status{
     DRAFT="DRAFT", 
-    PENDING="PENDING,", 
+    PENDING="PENDING", 
     PUBLISHED="PUBLISHED"
 }
 
