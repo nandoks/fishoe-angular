@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://robinsonfishoe-backend.onrender.com/graphql'
+    apiUrl: 'https://robison-fishoe.onrender.com/graphql'
 }
