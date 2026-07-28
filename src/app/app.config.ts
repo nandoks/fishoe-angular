@@ -10,7 +10,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache } from '@apollo/client';
-import { environment } from './environments/environments';
+import { environment } from '../environments/environment';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,7 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideApollo(() => {
       const httpLink = inject(HttpLink);
-
+      
       return {
         link: httpLink.create({
           uri: environment.apiUrl,
