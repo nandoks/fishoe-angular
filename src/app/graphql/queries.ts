@@ -15,7 +15,6 @@ export const getAllSpeciesQuery = gql`
       coordinates {
         id
         latitude
-        localityName
         longitude
       }
     }
@@ -30,7 +29,6 @@ export const getSpeciesByIdQuery = gql`
         id
         latitude
         longitude
-        localityName
       }
       description
       distributionNotes
