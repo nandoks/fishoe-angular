@@ -15,9 +15,9 @@ export const species: Species[] = [
     status: Status.PUBLISHED,
     imageUrl: 'https://dummyimage.com/600x400/2c3e50/ffffff&text=Doctorfish',
     coordinates: [
-      { id: 1, latitude: '18.2208', longitude: '-66.5901' },
-      { id: 2, latitude: '18.2315', longitude: '-66.6103' },
-      { id: 3, latitude: '18.2450', longitude: '-66.5850' },
+      { id: 1, latitude: 18.2208, longitude: -66.5901 },
+      { id: 2, latitude: 18.2315, longitude: -66.6103 },
+      { id: 3, latitude: 18.2450, longitude: -66.5850 },
     ],
   },
   {
@@ -34,9 +34,9 @@ export const species: Species[] = [
     imageUrl:
       'https://dummyimage.com/600x400/16a085/ffffff&text=Queen+Angelfish',
     coordinates: [
-      { id: 4, latitude: '19.2208', longitude: '-67.5901' },
-      { id: 5, latitude: '20.2315', longitude: '-68.6103' },
-      { id: 6, latitude: '21.2450', longitude: '-69.5850' },
+      { id: 4, latitude: 19.2208, longitude: -67.5901 },
+      { id: 5, latitude: 20.2315, longitude: -68.6103 },
+      { id: 6, latitude: 21.2450, longitude: -69.5850 },
     ],
   },
   {
@@ -51,8 +51,8 @@ export const species: Species[] = [
     status: Status.DRAFT,
     imageUrl: 'https://dummyimage.com/600x400/27ae60/ffffff&text=Parrotfish',
     coordinates: [
-      { id: 7, latitude: '18.2000', longitude: '-65.5000' },
-      { id: 8, latitude: '18.3000', longitude: '-64.8000' },
+      { id: 7, latitude: 18.2000, longitude: -65.5000 },
+      { id: 8, latitude: 18.3000, longitude: -64.8000 },
     ],
   },
   {
@@ -67,10 +67,10 @@ export const species: Species[] = [
     status: Status.PUBLISHED,
     imageUrl: 'https://dummyimage.com/600x400/e67e22/ffffff&text=Puffer',
     coordinates: [
-      { id: 9, latitude: '19.5000', longitude: '-70.5000' },
-      { id: 10, latitude: '20.0000', longitude: '-71.5000' },
-      { id: 11, latitude: '20.5000', longitude: '-72.5000' },
-      { id: 12, latitude: '21.0000', longitude: '-73.5000' },
+      { id: 9, latitude: 19.5000, longitude: -70.5000 },
+      { id: 10, latitude: 20.0000, longitude: -71.5000 },
+      { id: 11, latitude: 20.5000, longitude: -72.5000 },
+      { id: 12, latitude: 21.0000, longitude: -73.5000 },
     ],
   },
   {
