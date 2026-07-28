@@ -1,20 +1,27 @@
 import { inject, Inject, Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Species } from '../../models/species';
-import { SpeciesByIdResult, SpeciesQueryResult } from '../../graphql/interfaces';
+import {
+  SpeciesByIdResult,
+  SpeciesQueryResult,
+  UpdateSpeciesInput,
+  UpdateSpeciesResult,
+} from '../../graphql/interfaces';
 import { getAllSpeciesQuery, getSpeciesByIdQuery } from '../../graphql/queries';
 import { map, Observable } from 'rxjs';
-import { deleteSpeciesMutation } from '../../graphql/mutations';
+import {
+  deleteSpeciesMutation,
+  updateSpeciesMutation,
+} from '../../graphql/mutations';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SpeciesService {
   private readonly apollo = inject(Apollo);
-  species: Species[] | undefined;
+  species!: Species[];
 
   constructor() {}
-
 
   getAllSpecies(): Observable<Species[]> {
     return this.apollo
@@ -29,11 +36,11 @@ export class SpeciesService {
       );
   }
 
-  getSpeciesByID(id: number){
+  getSpeciesByID(id: number) {
     return this.apollo
       .query<SpeciesByIdResult>({
         query: getSpeciesByIdQuery,
-        variables: {id: id},
+        variables: { id: id },
       })
       .pipe(
         map((result) => {
@@ -42,17 +49,39 @@ export class SpeciesService {
       );
   }
 
-  deleteSpecies(id: number){
-    
+  deleteSpecies(id: number) {
     return this.apollo
-      .mutate<{ deleteSpecies: boolean}>({
+      .mutate<{ deleteSpecies: boolean }>({
         mutation: deleteSpeciesMutation,
-        variables: {id: id}
+        variables: { id: id },
       })
       .pipe(
         map((result) => {
           return result.data?.deleteSpecies || false;
-        })
+        }),
+      );
+  }
+
+  updateSpecies(
+    speciesId: number,
+    speciesData: UpdateSpeciesInput,
+  ): Observable<Species> {
+    return this.apollo
+      .mutate<UpdateSpeciesResult>({
+        mutation: updateSpeciesMutation,
+        variables: {
+          id: speciesId,
+          input: speciesData,
+        },
+      })
+      .pipe(
+        map((result) => {
+          const updated = result.data?.updateSpecies;
+          if (!updated) {
+            throw new Error('No data returned from update mutation');
+          }
+          return updated;
+        }),
       );
   }
 }

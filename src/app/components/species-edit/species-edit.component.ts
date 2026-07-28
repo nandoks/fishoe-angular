@@ -1,26 +1,22 @@
-import { Component, inject, OnDestroy, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Species } from '../../models/species';
-import { Family, Genus, Status } from '../../models/enums';
-import { NgFor } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CoordinateMapComponent } from './coordinate-map/coordinate-map.component';
 import { CoordinateFormComponent } from './coordinate-form/coordinate-form.component';
 import { CoordinatesListComponent } from './coordinates-list/coordinates-list.component';
-import { Apollo } from 'apollo-angular';
+import { DetailFormComponent } from './detail-form/detail-form.component';
+import { ActivatedRoute } from '@angular/router';
 import { SpeciesService } from '../../services/species/species.service';
 import { CoordinateService } from '../../services/coordinates/coordinate.service';
 import { Subject, takeUntil } from 'rxjs';
+import { Species } from '../../models/species';
+import { UpdateSpeciesInput } from '../../graphql/interfaces';
 
 @Component({
   selector: 'app-species-edit',
   imports: [
-    RouterLink,
-    NgFor,
-    FormsModule,
     CoordinateMapComponent,
     CoordinateFormComponent,
     CoordinatesListComponent,
+    DetailFormComponent,
   ],
   templateUrl: './species-edit.component.html',
   styleUrl: './species-edit.component.scss',
@@ -32,13 +28,6 @@ export class SpeciesEditComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   specie: Species | undefined;
-  families = Object.values(Family).sort();
-  genusList = Object.values(Genus).sort();
-  statusList = Object.values(Status);
-
-  //families: Family[] = [];
-  //genusList: Genus[] = [];
-  //statusList: Status[] = []
 
   speciesId!: number;
 
@@ -105,6 +94,18 @@ export class SpeciesEditComponent implements OnInit, OnDestroy {
               coordinates: [...this.specie.coordinates, newCoordinate],
             };
           }
+        },
+      });
+  }
+
+  handleUpdateSpecies(speciesData: UpdateSpeciesInput) {
+    this.speciesService
+      .updateSpecies(this.speciesId, speciesData)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (updatedSpecies) => {
+          this.specie = updatedSpecies;
+          alert("Updated succesfully")
         },
       });
   }

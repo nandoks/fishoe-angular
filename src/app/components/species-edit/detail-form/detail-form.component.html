@@ -1,1 +1,111 @@
-<p>detail works!</p>
+<div>
+  <h3>Details:</h3>
+  <hr />
+
+  @if (formData) {
+    <form class="py-2" action="">
+      <div class="formGroup">
+        <label class="fw-semibold" for="scientificNameInput"
+          >Scientific Name</label
+        >
+        <input
+          type="text"
+          name="scientificNameInput"
+          class="form-control"
+          [(ngModel)]="formData.scientificName"
+        />
+      </div>
+      <div class="formGroup">
+        <label class="fw-semibold" for="commonNameInput">Common Name</label>
+        <input
+          type="text"
+          name="commonNameInput"
+          class="form-control"
+          [(ngModel)]="formData.commonName"
+        />
+      </div>
+      <div class="formGroup">
+        <label class="fw-semibold" for="descriptionInput">Description</label>
+        <textarea
+          type="text"
+          name="descriptionInput"
+          class="form-control"
+          rows="4"
+          [(ngModel)]="formData.description"
+        ></textarea>
+      </div>
+      <div class="formGroup">
+        <label class="fw-semibold" for="distributionNotesInput"
+          >Distribution notes</label
+        >
+        <textarea
+          type="text"
+          name="distributionNotesInput"
+          class="form-control"
+          rows="4"
+          [(ngModel)]="formData.distributionNotes"
+        ></textarea>
+      </div>
+      <div class="formGroup">
+        <label for="familySelector" class="fw-semibold">Family</label>
+        <select
+          name="familySelector"
+          id="familySelector"
+          class="form-select form-control-lg"
+          [(ngModel)]="formData.family"
+        >
+          <option *ngFor="let family of families" [value]="family">
+            {{ family }}
+          </option>
+        </select>
+      </div>
+      <div class="formGroup">
+        <label class="fw-semibold" for="genusSelector">Genus</label>
+        <select
+          name="genusSelector"
+          id="genusSelector"
+          class="form-select"
+          [(ngModel)]="formData.genus"
+        >
+          <option *ngFor="let genus of genusList" [value]="genus">
+            {{ genus }}
+          </option>
+        </select>
+      </div>
+      <div class="formGroup">
+        <label class="fw-semibold" for="statusSelector">Status</label>
+        <select
+          name="statusSelector"
+          id="statusSelector"
+          class="form-select"
+          [(ngModel)]="formData.status"
+        >
+          <option *ngFor="let status of statusList" [value]="status">
+            {{ status }}
+          </option>
+        </select>
+      </div>
+      <hr />
+      <div class="formGroup" id="imageEdit">
+        <label class="fw-semibold" for="urlInput">Image URL</label>
+        <input
+          class="form-control"
+          name="urlInput"
+          type="text"
+          [(ngModel)]="formData.imageUrl"
+        />
+        <img
+          class="img-fluid m-3"
+          [src]="formData.imageUrl || 'https://dummyimage.com/180x180/cccccc/ffffff&text=No+Image'"
+          alt=""
+        />
+      </div>
+      <div class="d-flex flex-wrap gap-2 justify-content-center">
+        <button type="button" (click)="onSave()" class="btn btn-success">Save</button>
+        <button routerLink="" class="btn btn-danger">Cancel</button>
+      </div>
+    </form>
+  } @else {
+    <p class="text-muted">Loading species data...</p>
+  }
+</div>
