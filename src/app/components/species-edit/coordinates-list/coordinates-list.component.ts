@@ -1,6 +1,6 @@
-import { Component, EventEmitter, inject, Input, input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Coordinate } from '../../../models/corodinates';
-import { CoordinateService } from '../../../services/coordinates/coordinate.service';
+
 
 @Component({
   selector: 'app-coordinates-list',

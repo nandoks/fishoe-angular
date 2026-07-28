@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, Output } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Species } from '../../models/species';
 import { Family, Genus, Status } from '../../models/enums';
@@ -10,6 +10,7 @@ import { CoordinatesListComponent } from './coordinates-list/coordinates-list.co
 import { Apollo } from 'apollo-angular';
 import { SpeciesService } from '../../services/species/species.service';
 import { CoordinateService } from '../../services/coordinates/coordinate.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-species-edit',
@@ -24,11 +25,13 @@ import { CoordinateService } from '../../services/coordinates/coordinate.service
   templateUrl: './species-edit.component.html',
   styleUrl: './species-edit.component.scss',
 })
-export class SpeciesEditComponent implements OnInit {
+export class SpeciesEditComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private readonly apollo = inject(Apollo);
   private readonly speciesService = inject(SpeciesService);
   private readonly coordinateService = inject(CoordinateService);
+  private destroy$ = new Subject<void>();
+
   specie: Species | undefined;
   families = Object.values(Family).sort();
   genusList = Object.values(Genus).sort();
@@ -55,23 +58,56 @@ export class SpeciesEditComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   handleDeleteCoordinate(coordinateId: number): void {
     console.log(`deleting coordinate ${coordinateId}`);
     if (!confirm('Are you sure you want to delete this coordinate?')) {
       return;
     }
 
-    this.coordinateService.deleteCoordinate(coordinateId).subscribe({
-      next: (success) => {
-        if (success && this.specie) {
-          this.specie = {
-            ...this.specie,
-            coordinates: this.specie.coordinates.filter(
-              (coord) => coord.id !== coordinateId,
-            ),
-          };
-        }
-      },
-    });
+    this.coordinateService
+      .deleteCoordinate(coordinateId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (success) => {
+          if (success && this.specie) {
+            this.specie = {
+              ...this.specie,
+              coordinates: this.specie.coordinates.filter(
+                (coord) => coord.id !== coordinateId,
+              ),
+            };
+          }
+        },
+      });
+  }
+
+  handleAddCoordinate(coordinateData: {
+    latitude: number;
+    longitude: number;
+  }): void {
+    if (!this.specie) return;
+
+    this.coordinateService
+      .addCoordinate(
+        this.specie.id,
+        coordinateData.latitude,
+        coordinateData.longitude,
+      )
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (newCoordinate) => {
+          if (this.specie) {
+            this.specie = {
+              ...this.specie,
+              coordinates: [...this.specie.coordinates, newCoordinate],
+            };
+          }
+        },
+      });
   }
 }

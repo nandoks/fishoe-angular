@@ -1,22 +1,29 @@
-<div>
-  <p>Add a new coordinate:</p>
-  <div class="d-flex flex-column flex-sm-row gap-2">
+<div class="row g-2">
+  <div class="col-12 col-sm-5">
     <input
-      class="form-control flex-grow-1"
-      type="text"
-      name="latitude"
-      id="coordinateLatitude"
-      placeholder="latitude"
+      type="number"
+      class="form-control"
+      placeholder="Latitude"
+      [(ngModel)]="latitude"
+      step="any"
     />
+  </div>
+  <div class="col-12 col-sm-5">
     <input
-      class="form-control flex-grow-1"
-      type="text"
-      name="longitude"
-      id="coordinateLongitude"
-      placeholder="longitude"
+      type="number"
+      class="form-control"
+      placeholder="Longitude"
+      [(ngModel)]="longitude"
+      step="any"
     />
-    <button class="btn btn-success flex-grow-1 flex-sm-grow-0">
-      Add coordinate
+  </div>
+  <div class="col-12 col-sm-2">
+    <button
+      class="btn btn-success w-100"
+      (click)="onAdd()"
+      [disabled]="!latitude || !longitude"
+    >
+      Add
     </button>
   </div>
 </div>
