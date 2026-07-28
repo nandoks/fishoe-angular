@@ -1,55 +1,90 @@
 <section class="container my-4">
-  <div id="title" class="col-12 col-md-8 col-lg-9 mb-3 py-2">
-    <h2>Edit Species </h2>
-  </div>
   <div class="row g-3 px-3 bg-white">
+    <div class="col-12 col-md-8 col-lg-9 py-2">
+      <h2 class="sectionTitle">Edit Species</h2>
+    </div>
+    <!-- first column -->
     @if (specie) {
       <div id="detail" class="col-12 col-lg-6 mx-1">
         <h3>Details:</h3>
-        <hr>
+        <hr />
         <form class="py-2" action="">
-          <div>
-            <p class="my-2">Scientific Name</p>
+          <div class="formGroup">
+            <label class="fw-semibold" for="scientificNameInput"
+              >Scientific Name</label
+            >
             <input
               type="text"
-              name="scientifName"
+              name="scientificNameInput"
               class="form-control"
               value="{{ specie.scientificName }}"
             />
-            <p class="my-2">Common Name</p>
+          </div>
+          <div class="formGroup">
+            <label class="fw-semibold" for="commonNameInput">Common Name</label>
             <input
               type="text"
-              name="scientifName"
+              name="commonNameInput"
               class="form-control"
               value="{{ specie.commonName }}"
             />
-            <p class="my-2">Family</p>
+          </div>
+          <div class="formGroup">
+            <label class="fw-semibold" for="descriptionInput"
+              >Description</label
+            >
+            <textarea
+              type="text"
+              name="descriptionInput"
+              class="form-control"
+              rows="4"
+              value="{{ specie.description }}"
+            ></textarea>
+          </div>
+          <div class="formGroup">
+            <label class="fw-semibold" for="distributionNotesInput" hover=""
+              >Distribution notes</label
+            >
+            <textarea
+              type="text"
+              name="distributionNotesInput"
+              class="form-control"
+              rows="4"
+              value="{{ specie.distributionNotes }}"
+            ></textarea>
+          </div>
+          <div class="formGroup">
+            <label for="familySelector" class="fw-semibold">Family</label>
             <select
               name="familySelector"
               id="familySelector"
-              class="form-select my-2"
+              class="form-select form-control-lg"
               [(ngModel)]="specie.family"
             >
               <option *ngFor="let family of families" [value]="family">
                 {{ family }}
               </option>
             </select>
-            <p class="my-2">Genus</p>
+          </div>
+          <div class="formGroup">
+            <label class="fw-semibold" for="genusSelector">Genus</label>
             <select
               name="genusSelector"
               id="genusSelector"
-              class="form-select my-2"
+              class="form-select"
               [(ngModel)]="specie.genus"
             >
               <option *ngFor="let genus of genusList" [value]="genus">
                 {{ genus }}
               </option>
             </select>
-            <p class="my-2">Status</p>
+          </div>
+          <div class="formGroup">
+            <label class="fw-semibold" for="statusSelector">Status</label>
             <select
               name="statusSelector"
               id="statusSelector"
-              class="form-select my-2"
+              class="form-select"
               [(ngModel)]="specie.status"
             >
               <option *ngFor="let status of statusList" [value]="status">
@@ -58,10 +93,11 @@
             </select>
           </div>
           <hr />
-          <div id="imageEdit">
-            <p>Image URL</p>
+          <div class="formGroup" id="imageEdit">
+            <label class="fw-semibold" for="urlInput">Image URL</label>
             <input
               class="form-control"
+              name="urlInput"
               type="text"
               value="https://dummyimage.com/180x180/cccccc/ffffff&text=Doctorfish"
             />
@@ -71,18 +107,22 @@
               alt=""
             />
           </div>
-          <div class="d-flex flex-wrap gap-2 justify-content-end">
+          <div class="d-flex flex-wrap gap-2 justify-content-center">
             <button class="btn btn-success">Save</button>
             <a routerLink="/" class="btn btn-danger">Cancel</a>
           </div>
         </form>
       </div>
+      <!-- Second column -->
       <div class="col-12 col-lg-5 mx-3">
         <h3>Coordinates:</h3>
-        <hr>
+        <hr />
         <div id="coodinateEdit">
           <div class="my-3">
-              <app-coordinates-list [coordinates]="specie.coordinates"></app-coordinates-list>
+            <app-coordinates-list
+              [coordinates]="specie.coordinates || []"
+              (deleteCoordinate)="handleDeleteCoordinate($event)"
+            ></app-coordinates-list>
           </div>
           <hr />
           <div class="my-3">

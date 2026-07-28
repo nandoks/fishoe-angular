@@ -14,8 +14,29 @@
             <td>{{ coordinate.id }}</td>
             <td>{{ coordinate.latitude }}°</td>
             <td>{{ coordinate.longitude }}°</td>
+            <td>{{ coordinate.localityName || "-" }}</td>
             <td>
-              <button class="btn-delete mx-1" aria-label="Delete">🗑️</button>
+              <button
+                class="btn btn-outline-danger btn-sm border-0"
+                (click)="onDelete(coordinate.id)"
+                [disabled]="loading"
+                aria-label="Delete coordinate"
+              >
+                @if (loading) {
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  ></span>
+                } @else {
+                  🗑️
+                }
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" class="text-muted py-3">
+              No coordinates recorded yet.
             </td>
           </tr>
         }

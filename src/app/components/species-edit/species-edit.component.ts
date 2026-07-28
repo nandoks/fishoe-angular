@@ -1,30 +1,38 @@
 import { Component, inject, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from "@angular/router";
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Species } from '../../models/species';
 import { Family, Genus, Status } from '../../models/enums';
 import { NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CoordinateMapComponent } from "./coordinate-map/coordinate-map.component";
-import { CoordinateFormComponent } from "./coordinate-form/coordinate-form.component";
-import { CoordinatesListComponent } from "./coordinates-list/coordinates-list.component";
+import { CoordinateMapComponent } from './coordinate-map/coordinate-map.component';
+import { CoordinateFormComponent } from './coordinate-form/coordinate-form.component';
+import { CoordinatesListComponent } from './coordinates-list/coordinates-list.component';
 import { Apollo } from 'apollo-angular';
-
+import { SpeciesService } from '../../services/species/species.service';
+import { CoordinateService } from '../../services/coordinates/coordinate.service';
 
 @Component({
   selector: 'app-species-edit',
-  imports: [RouterLink, NgFor, FormsModule, CoordinateMapComponent, CoordinateFormComponent, CoordinatesListComponent],
+  imports: [
+    RouterLink,
+    NgFor,
+    FormsModule,
+    CoordinateMapComponent,
+    CoordinateFormComponent,
+    CoordinatesListComponent,
+  ],
   templateUrl: './species-edit.component.html',
-  styleUrl: './species-edit.component.scss'
+  styleUrl: './species-edit.component.scss',
 })
 export class SpeciesEditComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private readonly apollo = inject(Apollo)
-
-  
+  private readonly apollo = inject(Apollo);
+  private readonly speciesService = inject(SpeciesService);
+  private readonly coordinateService = inject(CoordinateService);
   specie: Species | undefined;
   families = Object.values(Family).sort();
   genusList = Object.values(Genus).sort();
-  statusList = Object.values(Status)
+  statusList = Object.values(Status);
 
   //families: Family[] = [];
   //genusList: Genus[] = [];
@@ -32,10 +40,38 @@ export class SpeciesEditComponent implements OnInit {
 
   speciesId!: number;
 
-  ngOnInit():void {
-    this.route.paramMap.subscribe(params => {
-        this.speciesId = Number(params.get('speciesId'));
-        console.log(this.speciesId);
-    })    
-  } 
+  ngOnInit(): void {
+    var speciesId: number;
+    this.route.paramMap.subscribe((params) => {
+      this.speciesId = Number(params.get('speciesId'));
+    });
+
+    if (this.speciesId) {
+      this.speciesService.getSpeciesByID(this.speciesId).subscribe({
+        next: (data) => {
+          this.specie = data;
+        },
+      });
+    }
+  }
+
+  handleDeleteCoordinate(coordinateId: number): void {
+    console.log(`deleting coordinate ${coordinateId}`);
+    if (!confirm('Are you sure you want to delete this coordinate?')) {
+      return;
+    }
+
+    this.coordinateService.deleteCoordinate(coordinateId).subscribe({
+      next: (success) => {
+        if (success && this.specie) {
+          this.specie = {
+            ...this.specie,
+            coordinates: this.specie.coordinates.filter(
+              (coord) => coord.id !== coordinateId,
+            ),
+          };
+        }
+      },
+    });
+  }
 }
