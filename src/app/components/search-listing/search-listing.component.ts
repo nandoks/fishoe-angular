@@ -15,6 +15,9 @@ import { SpeciesService } from '../../services/species/species.service';
 export class SearchListingComponent implements OnInit {
   private readonly apollo = inject(Apollo);
   private readonly speciesService = inject(SpeciesService)
+
+  loading = true;
+  error: string | null = null;
   species: Species[] | undefined = [];
   families = Object.values(Family).sort();
   genusList = Object.values(Genus).sort();
@@ -23,8 +26,10 @@ export class SearchListingComponent implements OnInit {
     this.speciesService.getAllSpecies().subscribe({
         next: (data) => {
         this.species = data;
+        this.loading=false;        
       },
       error: (err) => {
+        this.error = "Failed to load species. Server might be waking up. check logs"
         console.error('Error loading species:', err);
       },
     });

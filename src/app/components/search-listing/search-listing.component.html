@@ -47,6 +47,7 @@
       </div>
     </div>
   </div>
+
   <div id="table-species" class="row mt-4">
     <div class="col-12">
       <div class="table-responsive rounded-4 bg-light-subtle p-2">
@@ -63,29 +64,81 @@
             </tr>
           </thead>
           <tbody>
-            @for (specie of species; track specie.id) {
+            @if (loading) {
               <tr>
-                <th class="fw-normal">{{ specie.scientificName }}</th>
-                <td>{{ specie.family }}</td>
-                <td>
-                  <span class="badge-locations"
-                    >📍 {{ specie.coordinates.length }}</span
+                <td colspan="5" class="text-center py-5">
+                  <div
+                    class="spinner-border text-primary"
+                    role="status"
+                    style="width: 3rem; height: 3rem"
                   >
-                </td>
-                <td>
-                  <span class="badge-status published">
-                    {{ specie.status }}</span
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <p class="text-muted mt-3">
+                    <strong>Waking up the server...</strong>
+                  </p>
+                  <p class="text-muted small">
+                    The server might be spinning up after inactivity. This may take
+                    20-30 seconds.
+                  </p>
+                  <div
+                    class="progress"
+                    style="height: 4px; max-width: 300px; margin: 0 auto"
                   >
-                </td>
-                <td>
-                  <button class="btn-edit mx-1" aria-label="Edit">
-                    <a [routerLink]="['edit/', specie.id]">✏️</a>
-                  </button>
-                  <button class="btn-delete mx-1" aria-label="Delete">
-                    🗑️
-                  </button>
+                    <div
+                      class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+                      role="progressbar"
+                      style="width: 100%"
+                      aria-valuenow="100"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
                 </td>
               </tr>
+            } @else if (error) {
+              <tr>
+                <td colspan="5" class="text-center py-4">
+                  <div
+                    class="alert alert-danger mb-0 d-inline-block"
+                    role="alert"
+                  >
+                    <i
+                      class="bi bi-exclamation-triangle-fill fs-4 d-block mb-2"
+                    ></i>
+                    <strong>{{ error }}</strong>
+                    <p class="mt-2 small mb-0">
+                      This may happen if the server is still starting up. Please
+                      try again.
+                    </p>
+                  </div>
+                </td>
+              </tr>
+            } @else {
+              @for (specie of species; track specie.id) {
+                <tr>
+                  <th class="fw-normal">{{ specie.scientificName }}</th>
+                  <td>{{ specie.family }}</td>
+                  <td>
+                    <span class="badge-locations"
+                      >📍 {{ specie.coordinates.length }}</span
+                    >
+                  </td>
+                  <td>
+                    <span class="badge-status published">
+                      {{ specie.status }}</span
+                    >
+                  </td>
+                  <td>
+                    <button class="btn-edit mx-1" aria-label="Edit">
+                      <a [routerLink]="['edit/', specie.id]">✏️</a>
+                    </button>
+                    <button class="btn-delete mx-1" aria-label="Delete">
+                      🗑️
+                    </button>
+                  </td>
+                </tr>
+              }
             }
           </tbody>
         </table>
