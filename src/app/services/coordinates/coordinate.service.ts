@@ -15,15 +15,14 @@ export class CoordinateService {
 
   constructor() {}
 
-  deleteCoordinate(coordinateId: number) {
+  deleteCoordinate(id: number) {
     return this.apollo
       .mutate<{ deleteCoordinate: boolean }>({
         mutation: deleteCoordinateMutation,
-        variables: { id: coordinateId },
+        variables: { id: id },
       })
       .pipe(
         map((result) => {
-          console.log('Coordinate deleted:', result.data?.deleteCoordinate);
           return result.data?.deleteCoordinate || false;
         }),
       );

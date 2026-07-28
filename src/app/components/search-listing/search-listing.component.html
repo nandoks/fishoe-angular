@@ -133,7 +133,7 @@
                     <button class="btn-edit mx-1" aria-label="Edit">
                       <a [routerLink]="['edit/', specie.id]">✏️</a>
                     </button>
-                    <button class="btn-delete mx-1" aria-label="Delete">
+                    <button class="btn-delete mx-1" (click)="deleteSpecies(specie.id)" aria-label="Delete">
                       🗑️
                     </button>
                   </td>

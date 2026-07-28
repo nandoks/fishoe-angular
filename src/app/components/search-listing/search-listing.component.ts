@@ -1,4 +1,11 @@
-import { Component, inject, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Species } from '../../models/species';
 import { Family, Genus } from '../../models/enums';
@@ -25,20 +32,45 @@ export class SearchListingComponent implements OnInit, OnDestroy {
   genusList = Object.values(Genus).sort();
 
   ngOnInit(): void {
-    this.speciesService.getAllSpecies().pipe(takeUntil(this.destroy$)).subscribe({
-      next: (data) => {
-        this.species = data;
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error =
-          'Failed to load species. Server might be waking up. check logs';
-        console.error('Error loading species:', err);
-      },
-    });
+    this.loadSpecies();
   }
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  loadSpecies() {
+    this.speciesService
+      .getAllSpecies()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          this.species = data;
+          this.loading = false;
+        },
+        error: (err) => {
+          this.error =
+            'Failed to load species. Server might be waking up. check logs';
+          console.error('Error loading species:', err);
+        },
+      });
+  }
+
+  deleteSpecies(speciesId: number): void {
+    if (!confirm('Are you sure you want to delete this coordinate?')) {
+      return;
+    }
+    this.speciesService
+      .deleteSpecies(speciesId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (succes) => {
+          if (succes) {
+            this.species = this.species?.filter(
+              (specie) => specie.id !== speciesId,
+            );
+          }
+        },
+      });
   }
 }

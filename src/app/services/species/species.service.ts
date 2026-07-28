@@ -4,6 +4,7 @@ import { Species } from '../../models/species';
 import { SpeciesByIdResult, SpeciesQueryResult } from '../../graphql/interfaces';
 import { getAllSpeciesQuery, getSpeciesByIdQuery } from '../../graphql/queries';
 import { map, Observable } from 'rxjs';
+import { deleteSpeciesMutation } from '../../graphql/mutations';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +39,20 @@ export class SpeciesService {
         map((result) => {
           return result.data?.speciesById;
         }),
+      );
+  }
+
+  deleteSpecies(id: number){
+    
+    return this.apollo
+      .mutate<{ deleteSpecies: boolean}>({
+        mutation: deleteSpeciesMutation,
+        variables: {id: id}
+      })
+      .pipe(
+        map((result) => {
+          return result.data?.deleteSpecies || false;
+        })
       );
   }
 }

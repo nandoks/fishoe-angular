@@ -27,7 +27,6 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class SpeciesEditComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
-  private readonly apollo = inject(Apollo);
   private readonly speciesService = inject(SpeciesService);
   private readonly coordinateService = inject(CoordinateService);
   private destroy$ = new Subject<void>();
@@ -64,7 +63,6 @@ export class SpeciesEditComponent implements OnInit, OnDestroy {
   }
 
   handleDeleteCoordinate(coordinateId: number): void {
-    console.log(`deleting coordinate ${coordinateId}`);
     if (!confirm('Are you sure you want to delete this coordinate?')) {
       return;
     }
