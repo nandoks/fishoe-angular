@@ -1,7 +1,9 @@
-<section container my-4>
+<section class="container my-4">
   <div id="title" class="col-12 col-md-8 col-lg-9 mb-3 py-2">
     <h2>Search Species</h2>
   </div>
+
+  <!-- Search Bar -->
   <div id="searchBar" class="row g-3 align-items-start">
     <div class="col-12">
       <form action="" class="d-flex flex-nowrap gap-2 align-items-center">
@@ -26,12 +28,12 @@
         </select>
 
         <button class="btn btn-primary flex-shrink-0">Apply</button>
-
         <button class="btn btn-danger flex-shrink-0">Clear</button>
       </form>
     </div>
   </div>
 
+  <!-- Table -->
   <div id="table-species" class="row mt-4">
     <div class="col-12">
       <div class="table-responsive rounded-4 bg-light-subtle p-2">
@@ -52,7 +54,7 @@
           <tbody>
             @if (loading) {
               <tr>
-                <td colspan="5" class="text-center py-5">
+                <td colspan="7" class="text-center py-5">
                   <div
                     class="spinner-border text-primary"
                     role="status"
@@ -84,7 +86,7 @@
               </tr>
             } @else if (error) {
               <tr>
-                <td colspan="5" class="text-center py-4">
+                <td colspan="7" class="text-center py-4">
                   <div
                     class="alert alert-danger mb-0 d-inline-block"
                     role="alert"
