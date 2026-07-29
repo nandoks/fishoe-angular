@@ -15,7 +15,7 @@ export const deleteSpeciesMutation = gql`
 
 // ##### END delete mutations #####
 
-// ##### START add mutations #####
+// ##### START create mutations #####
 export const addCoordinateMutation = gql`
   mutation AddCoordinate($speciesId: ID!, $input: CreateCoordinateInput!) {
     createCoordinate(speciesId: $speciesId, input: $input) {
@@ -26,7 +26,15 @@ export const addCoordinateMutation = gql`
   }
 `;
 
-// ##### END add mutations #####
+export const createSpeciesMutation = gql`
+  mutation CreateSpecies($input: CreateSpeciesInput!) {
+    createSpecies(input: $input) {
+      id
+    }
+  }
+`;
+
+// ##### END create mutations #####
 
 // ##### START update mutations #####
 export const updateSpeciesMutation = gql`

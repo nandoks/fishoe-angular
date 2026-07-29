@@ -9,7 +9,7 @@ import {
 import { Species } from '../../../models/species';
 import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
-import { Family, Genus, Status } from '../../../models/enums';
+import { Status } from '../../../models/enums';
 import { UpdateSpeciesInput } from '../../../graphql/interfaces';
 import { RouterLink } from '@angular/router';
 
@@ -22,8 +22,6 @@ import { RouterLink } from '@angular/router';
 export class DetailFormComponent implements OnChanges {
   @Input() specie!: Species;
   @Output() updateSpecies = new EventEmitter<UpdateSpeciesInput>();
-  families = Object.values(Family).sort();
-  genusList = Object.values(Genus).sort();
   formData: Species | null = null;
   statusList = Object.values(Status);
 

@@ -23,3 +23,13 @@ export interface UpdateSpeciesInput {
   status?: Status,
   imageUrl?: string;
 }
+
+export interface CreateSpeciesInput {
+  scientificName: string;
+  commonName: string;
+  family: string;
+  genus: string;
+  distributionNotes: string;
+  description: string;
+  imageUrl?: string;
+}

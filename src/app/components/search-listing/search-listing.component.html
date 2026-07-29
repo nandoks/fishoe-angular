@@ -3,48 +3,32 @@
     <h2>Search Species</h2>
   </div>
   <div id="searchBar" class="row g-3 align-items-start">
-    <div class="col-12 col-md-8 col-lg-9">
-      <form action="" class="d-flex flex-column flex-sm-row gap-2">
+    <div class="col-12">
+      <form action="" class="d-flex flex-nowrap gap-2 align-items-center">
         <input
           type="text"
           name="textSearch"
-          placeholder="type your search here"
-          class="form-control flex-grow-2 w-50"
+          placeholder="Type your search here..."
+          class="form-control flex"
+          style="min-width: 120px"
         />
-        <select
-          name="familySelector"
-          id="familySelector"
-          class="form-select flex-grow-1 w-25"
-        >
-          <option value="" selected>Family</option>
-          <option *ngFor="let family of families" [value]="family">
-            {{ family }}
-          </option>
-        </select>
+
         <select
           name="statusSelector"
           id="statusSelector"
-          class="form-select flex-grow-1 w-25"
+          class="form-select flex-grow-0"
+          style="width: 150px; flex-shrink: 0"
         >
           <option value="" selected>Status</option>
-          <option *ngFor="let genus of genusList" [value]="genus">
-            {{ genus }}
+          <option *ngFor="let status of statusList" [value]="status">
+            {{ status }}
           </option>
         </select>
+
+        <button class="btn btn-primary flex-shrink-0">Apply</button>
+
+        <button class="btn btn-danger flex-shrink-0">Clear</button>
       </form>
-    </div>
-    <div class="col-12 col-md-4 col-lg-3">
-      <div
-        class="d-flex flex-wrap gap-2 justify-content-start justify-content-md-end"
-      >
-        <button class="btn btn-primary flex-grow-1 flex-md-grow-0">
-          Apply
-        </button>
-        <button class="btn btn-danger flex-grow-1 flex-md-grow-0">Clear</button>
-        <button class="btn btn-success flex-grow-1 flex-md-grow-0">
-          + Add New
-        </button>
-      </div>
     </div>
   </div>
 
@@ -80,8 +64,8 @@
                     <strong>Waking up the server...</strong>
                   </p>
                   <p class="text-muted small">
-                    The server might be spinning up after inactivity. This may take
-                    20-30 seconds.
+                    The server might be spinning up after inactivity. This may
+                    take 20-30 seconds.
                   </p>
                   <div
                     class="progress"
@@ -133,13 +117,21 @@
                     >
                   </td>
                   <td>
-                    <img class="imageThumbnail" src="{{ specie.imageUrl }}"  alt="Image for {{specie.commonName}}">
+                    <img
+                      class="imageThumbnail"
+                      src="{{ specie.imageUrl }}"
+                      alt="Image for {{ specie.commonName }}"
+                    />
                   </td>
                   <td>
                     <button class="btn-edit mx-1" aria-label="Edit">
                       <a [routerLink]="['edit/', specie.id]">✏️</a>
                     </button>
-                    <button class="btn-delete mx-1" (click)="deleteSpecies(specie.id)" aria-label="Delete">
+                    <button
+                      class="btn-delete mx-1"
+                      (click)="deleteSpecies(specie.id)"
+                      aria-label="Delete"
+                    >
                       🗑️
                     </button>
                   </td>

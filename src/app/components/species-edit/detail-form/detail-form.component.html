@@ -47,30 +47,22 @@
         ></textarea>
       </div>
       <div class="formGroup">
-        <label for="familySelector" class="fw-semibold">Family</label>
-        <select
-          name="familySelector"
-          id="familySelector"
-          class="form-select form-control-lg"
+        <label for="familyInput" class="fw-semibold">Family</label>
+        <input
+          name="familyInput"
+          id="familyInput"
+          class="form-control"
           [(ngModel)]="formData.family"
         >
-          <option *ngFor="let family of families" [value]="family">
-            {{ family }}
-          </option>
-        </select>
       </div>
       <div class="formGroup">
-        <label class="fw-semibold" for="genusSelector">Genus</label>
-        <select
-          name="genusSelector"
-          id="genusSelector"
-          class="form-select"
+        <label class="fw-semibold" for="genusInput">Genus</label>
+        <input
+          name="genusInput"
+          id="genusInput"
+          class="form-control"
           [(ngModel)]="formData.genus"
         >
-          <option *ngFor="let genus of genusList" [value]="genus">
-            {{ genus }}
-          </option>
-        </select>
       </div>
       <div class="formGroup">
         <label class="fw-semibold" for="statusSelector">Status</label>
@@ -95,7 +87,7 @@
           [(ngModel)]="formData.imageUrl"
         />
         <img
-          class="img-fluid m-3"
+          class="img-fluid m-3 speciesImage"
           [src]="formData.imageUrl || 'https://dummyimage.com/180x180/cccccc/ffffff&text=No+Image'"
           alt=""
         />

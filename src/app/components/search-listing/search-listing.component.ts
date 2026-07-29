@@ -8,11 +8,11 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Species } from '../../models/species';
-import { Family, Genus } from '../../models/enums';
 import { NgFor } from '@angular/common';
 import { Apollo } from 'apollo-angular';
 import { SpeciesService } from '../../services/species/species.service';
 import { Subject, takeUntil } from 'rxjs';
+import { Status } from '../../models/enums';
 
 @Component({
   selector: 'app-search-listing',
@@ -28,9 +28,7 @@ export class SearchListingComponent implements OnInit, OnDestroy {
   loading = false;
   error: string | null = null;
   species: Species[] | undefined = [];
-  families = Object.values(Family).sort();
-  genusList = Object.values(Genus).sort();
-
+  statusList = Object.values(Status);
   ngOnInit(): void {
     this.loadSpecies();
   }
@@ -59,7 +57,7 @@ export class SearchListingComponent implements OnInit, OnDestroy {
   }
 
   deleteSpecies(speciesId: number): void {
-    if (!confirm('Are you sure you want to delete this coordinate?')) {
+    if (!confirm('Are you sure you want to delete this species?')) {
       return;
     }
     this.speciesService

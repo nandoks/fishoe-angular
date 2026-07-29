@@ -2,6 +2,7 @@ import { inject, Inject, Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { Species } from '../../models/species';
 import {
+  CreateSpeciesInput,
   SpeciesByIdResult,
   SpeciesQueryResult,
   UpdateSpeciesInput,
@@ -10,6 +11,7 @@ import {
 import { getAllSpeciesQuery, getSpeciesByIdQuery } from '../../graphql/queries';
 import { map, Observable } from 'rxjs';
 import {
+  createSpeciesMutation,
   deleteSpeciesMutation,
   updateSpeciesMutation,
 } from '../../graphql/mutations';
@@ -81,6 +83,35 @@ export class SpeciesService {
             throw new Error('No data returned from update mutation');
           }
           return updated;
+        }),
+      );
+  }
+
+  createSpecies(input: CreateSpeciesInput): Observable<Number> {
+    console.log(input)
+    return this.apollo
+      .mutate<{ createSpecies: Species }>({
+        mutation: createSpeciesMutation,
+        variables: {
+          input: {
+            scientificName: input.scientificName,
+            commonName: input.commonName,
+            family: input.family,
+            genus: input.genus,
+            distributionNotes: input.distributionNotes,
+            description: input.description,
+            imageUrl: input.imageUrl,
+          },
+        },
+      })
+      .pipe(
+        map((result) => {
+          const species = result.data?.createSpecies;
+          console.log(result.data)
+          if (!species) {
+            throw new Error('Something went wrong. No species returned from creation');
+          }
+          return species.id;
         }),
       );
   }
