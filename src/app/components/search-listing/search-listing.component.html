@@ -52,14 +52,16 @@
     <div class="col-12">
       <div class="table-responsive rounded-4 bg-light-subtle p-2">
         <table
-          class="table table-light table-striped table-hover text-center mb-0"
+          class="table table-light table-striped table-hover text-center mb-0 searchTable"
         >
           <thead>
             <tr>
               <th scope="col">Scientific Name</th>
               <th scope="col">Family</th>
+              <th scope="col">Common Name</th>
               <th scope="col">Locations</th>
               <th scope="col">Status</th>
+              <th scope="col">Thumbnail</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
@@ -117,8 +119,9 @@
             } @else {
               @for (specie of species; track specie.id) {
                 <tr>
-                  <th class="fw-normal">{{ specie.scientificName }}</th>
+                  <td class="fw-normal">{{ specie.scientificName }}</td>
                   <td>{{ specie.family }}</td>
+                  <td>{{ specie.commonName }}</td>
                   <td>
                     <span class="badge-locations"
                       >📍 {{ specie.coordinates.length }}</span
@@ -128,6 +131,9 @@
                     <span class="badge-status published">
                       {{ specie.status }}</span
                     >
+                  </td>
+                  <td>
+                    <img class="imageThumbnail" src="{{ specie.imageUrl }}"  alt="Image for {{specie.commonName}}">
                   </td>
                   <td>
                     <button class="btn-edit mx-1" aria-label="Edit">

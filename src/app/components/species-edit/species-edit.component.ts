@@ -22,34 +22,48 @@ import { UpdateSpeciesInput } from '../../graphql/interfaces';
   styleUrl: './species-edit.component.scss',
 })
 export class SpeciesEditComponent implements OnInit, OnDestroy {
+  
   private route = inject(ActivatedRoute);
   private readonly speciesService = inject(SpeciesService);
   private readonly coordinateService = inject(CoordinateService);
   private destroy$ = new Subject<void>();
-
+  
+  loading = false;
+  error: string | null = null;
   specie: Species | undefined;
 
   speciesId!: number;
 
   ngOnInit(): void {
+    this.loading=true
     var speciesId: number;
     this.route.paramMap.subscribe((params) => {
       this.speciesId = Number(params.get('speciesId'));
     });
-
-    if (this.speciesId) {
-      this.speciesService.getSpeciesByID(this.speciesId).subscribe({
-        next: (data) => {
-          this.specie = data;
-        },
-      });
-    }
+    this.loadSpecie()
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  loadSpecie(){
+    if (this.speciesId) {
+      this.speciesService.getSpeciesByID(this.speciesId).subscribe({
+        next: (data) => {
+          this.specie = data;
+          this.loading = false;
+        },
+        error: (err) => {
+          this.error =
+            'Failed to load species. Server might be waking up. check logs';
+          console.error('Error loading species:', err);
+          this.loading = false;
+        },
+      });
+    }
+  };
 
   handleDeleteCoordinate(coordinateId: number): void {
     if (!confirm('Are you sure you want to delete this coordinate?')) {

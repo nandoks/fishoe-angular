@@ -3,37 +3,74 @@
     <div class="col-12 col-md-8 col-lg-9 py-2">
       <h2 class="sectionTitle">Edit Species</h2>
     </div>
-    <!-- first column -->
-    @if (specie) {
-      <div id="detail" class="col-12 col-lg-6 mx-1">
-        <app-detail-form
-          [specie]="specie"
-          (updateSpecies)="handleUpdateSpecies($event)"
-        ></app-detail-form>
-      </div>
-      <!-- Second column -->
-      <div class="col-12 col-lg-5 mx-3">
-        <h3>Coordinates:</h3>
-        <hr />
-        <div id="coodinateEdit">
-          <div class="my-3">
-            <app-coordinates-list
-              [coordinates]="specie.coordinates || []"
-              (deleteCoordinate)="handleDeleteCoordinate($event)"
-            ></app-coordinates-list>
-          </div>
-          <hr />
-          <div class="my-3">
-            <app-coordinate-form
-              (addCoordinate)="handleAddCoordinate($event)"
-            ></app-coordinate-form>
-          </div>
-          <hr />
-          <div class="my-3">
-            <app-coordinate-map></app-coordinate-map>
-          </div>
+    @if (loading) {
+      <div class="col-12 text-center py-5">
+        <div
+          class="spinner-border text-primary"
+          role="status"
+          style="width: 3rem; height: 3rem"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="text-muted small mt-3">Fetching data. Please wait.</p>
+        <div
+          class="progress"
+          style="height: 4px; max-width: 300px; margin: 0 auto"
+        >
+          <div
+            class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+            role="progressbar"
+            style="width: 100%"
+            aria-valuenow="100"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
         </div>
       </div>
+    } @else if (error) {
+      <div class="col-12 text-center py-4">
+        <div class="alert alert-danger d-inline-block" role="alert">
+          <i class="bi bi-exclamation-triangle-fill fs-4 d-block mb-2"></i>
+          <strong>{{ error }}</strong>
+          <p class="mt-2 small mb-0">
+            This may happen if the server is still starting up. Please try
+            again.
+          </p>
+        </div>
+      </div>
+    } @else {
+      <!-- first column -->
+      @if (specie) {
+        <div id="detail" class="col-12 col-lg-6 mx-1">
+          <app-detail-form
+            [specie]="specie"
+            (updateSpecies)="handleUpdateSpecies($event)"
+          ></app-detail-form>
+        </div>
+        <!-- Second column -->
+        <div class="col-12 col-lg-5 mx-3">
+          <h3>Coordinates:</h3>
+          <hr />
+          <div id="coodinateEdit">
+            <div class="my-3">
+              <app-coordinates-list
+                [coordinates]="specie.coordinates || []"
+                (deleteCoordinate)="handleDeleteCoordinate($event)"
+              ></app-coordinates-list>
+            </div>
+            <hr />
+            <div class="my-3">
+              <app-coordinate-form
+                (addCoordinate)="handleAddCoordinate($event)"
+              ></app-coordinate-form>
+            </div>
+            <hr />
+            <div class="my-3">
+              <app-coordinate-map></app-coordinate-map>
+            </div>
+          </div>
+        </div>
+      }
     }
   </div>
 </section>
