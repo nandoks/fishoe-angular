@@ -119,7 +119,7 @@
                   <td>
                     <img
                       class="imageThumbnail"
-                      src="{{ specie.imageUrl }}"
+                      [src]="specie.imageUrl ? specie.imageUrl : 'https://dummyimage.com/180x180/c0392b/ffffff&text=No-Image'"
                       alt="Image for {{ specie.commonName }}"
                     />
                   </td>

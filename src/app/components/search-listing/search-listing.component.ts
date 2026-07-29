@@ -6,12 +6,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Species } from '../../models/species';
 import { NgFor } from '@angular/common';
 import { Apollo } from 'apollo-angular';
 import { SpeciesService } from '../../services/species/species.service';
-import { Subject, takeUntil } from 'rxjs';
+import { filter, Subject, takeUntil } from 'rxjs';
 import { Status } from '../../models/enums';
 
 @Component({
@@ -24,6 +24,7 @@ export class SearchListingComponent implements OnInit, OnDestroy {
   private readonly apollo = inject(Apollo);
   private readonly speciesService = inject(SpeciesService);
   private destroy$ = new Subject<void>();
+  private router = inject(Router);
 
   loading = false;
   error: string | null = null;
@@ -31,6 +32,17 @@ export class SearchListingComponent implements OnInit, OnDestroy {
   statusList = Object.values(Status);
   ngOnInit(): void {
     this.loadSpecies();
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => {
+        // Only reload if we're on the listing page
+        if (this.router.url === '/' || this.router.url === '/species') {
+          this.loadSpecies();
+        }
+      });
   }
   ngOnDestroy(): void {
     this.destroy$.next();
