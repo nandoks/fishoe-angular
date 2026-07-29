@@ -25,7 +25,7 @@ export class SearchListingComponent implements OnInit, OnDestroy {
   private readonly speciesService = inject(SpeciesService);
   private destroy$ = new Subject<void>();
 
-  loading = true;
+  loading = false;
   error: string | null = null;
   species: Species[] | undefined = [];
   families = Object.values(Family).sort();
@@ -40,6 +40,7 @@ export class SearchListingComponent implements OnInit, OnDestroy {
   }
 
   loadSpecies() {
+    this.loading = true;
     this.speciesService
       .getAllSpecies()
       .pipe(takeUntil(this.destroy$))
@@ -52,6 +53,7 @@ export class SearchListingComponent implements OnInit, OnDestroy {
           this.error =
             'Failed to load species. Server might be waking up. check logs';
           console.error('Error loading species:', err);
+          this.loading = false;
         },
       });
   }
