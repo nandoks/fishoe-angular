@@ -29,6 +29,7 @@ export class SpeciesService {
     return this.apollo
       .query<SpeciesQueryResult>({
         query: getAllSpeciesQuery,
+        fetchPolicy: 'network-only',
       })
       .pipe(
         map((result) => {
