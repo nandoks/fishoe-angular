@@ -1,4 +1,4 @@
-import { Coordinate } from "./corodinates";
+import { Coordinate } from "./coordinates";
 import { Status } from "./enums";
 
 export interface Species {

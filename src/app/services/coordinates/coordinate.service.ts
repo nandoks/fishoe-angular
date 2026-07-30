@@ -5,7 +5,7 @@ import {
   deleteCoordinateMutation,
 } from '../../graphql/mutations';
 import { map, Observable } from 'rxjs';
-import { Coordinate } from '../../models/corodinates';
+import { Coordinate } from '../../models/coordinates';
 
 @Injectable({
   providedIn: 'root',

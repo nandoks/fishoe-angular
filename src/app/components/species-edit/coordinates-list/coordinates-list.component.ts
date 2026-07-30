@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Coordinate } from '../../../models/corodinates';
+import { Coordinate } from '../../../models/coordinates';
 
 
 @Component({
