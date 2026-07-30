@@ -38,7 +38,7 @@
     <div class="col-12">
       <div class="table-responsive rounded-4 bg-light-subtle p-2">
         <table
-          class="table table-light table-striped table-hover text-center mb-0 searchTable"
+          class="table table-light table-striped table-hover text-center align-middle mb-0"
         >
           <thead>
             <tr>
@@ -70,8 +70,8 @@
                     take 20-30 seconds.
                   </p>
                   <div
-                    class="progress"
-                    style="height: 4px; max-width: 300px; margin: 0 auto"
+                    class="progress mx-auto"
+                    style="height: 4px; max-width: 300px"
                   >
                     <div
                       class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
@@ -109,12 +109,12 @@
                   <td>{{ specie.family }}</td>
                   <td>{{ specie.commonName }}</td>
                   <td>
-                    <span class="badge-locations"
-                      >📍 {{ specie.coordinates.length }}</span
+                    <span class="badge bg-secondary"
+                      ><i class="bi bi-geo-alt-fill me-1"></i>{{ specie.coordinates.length }}</span
                     >
                   </td>
                   <td>
-                    <span class="badge-status published">
+                    <span class="badge bg-info">
                       {{ specie.status }}</span
                     >
                   </td>
@@ -126,15 +126,21 @@
                     />
                   </td>
                   <td>
-                    <button class="btn-edit mx-1" aria-label="Edit">
-                      <a [routerLink]="['edit/', specie.id]">✏️</a>
-                    </button>
+                    <a
+                      class="btn btn-outline-primary btn-sm mx-1"
+                      [routerLink]="['edit/', specie.id]"
+                      aria-label="Edit"
+                      title="Edit"
+                    >
+                      <i class="bi bi-pencil"></i>
+                    </a>
                     <button
-                      class="btn-delete mx-1"
+                      class="btn btn-outline-danger btn-sm mx-1"
                       (click)="deleteSpecies(specie.id)"
                       aria-label="Delete"
+                      title="Delete"
                     >
-                      🗑️
+                      <i class="bi bi-trash"></i>
                     </button>
                   </td>
                 </tr>

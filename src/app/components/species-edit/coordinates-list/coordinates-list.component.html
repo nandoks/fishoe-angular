@@ -20,6 +20,7 @@
                 (click)="onDelete(coordinate.id)"
                 [disabled]="loading"
                 aria-label="Delete coordinate"
+                title="Delete"
               >
                 @if (loading) {
                   <span
@@ -27,7 +28,7 @@
                     role="status"
                   ></span>
                 } @else {
-                  🗑️
+                  <i class="bi bi-trash"></i>
                 }
               </button>
             </td>
