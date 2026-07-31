@@ -1,0 +1,64 @@
+import { gql } from 'apollo-angular';
+
+export const getAllSpeciesQuery = gql`
+  query allSpecies {
+    species {
+      id
+      commonName
+      description
+      distributionNotes
+      family
+      genus
+      imageUrl
+      status
+      scientificName
+      coordinates {
+        id
+        latitude
+        longitude
+      }
+    }
+  }
+`;
+
+export const getSpeciesByIdQuery = gql`
+  query speciesById($id: ID!) {
+    speciesById(id: $id) {
+      commonName
+      coordinates {
+        id
+        latitude
+        longitude
+      }
+      description
+      distributionNotes
+      family
+      genus
+      id
+      imageUrl
+      scientificName
+      status
+    }
+  }
+`;
+
+export const searchSpecies = gql`
+  query SearchSpecies($textInput: String!){
+    searchSpecies(textInput: $textInput) {
+      id
+      commonName
+      description
+      distributionNotes
+      family
+      genus
+      imageUrl
+      status
+      scientificName
+      coordinates {
+        id
+        latitude
+        longitude
+      }
+    }
+  }
+`;

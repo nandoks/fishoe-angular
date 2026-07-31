@@ -1,0 +1,46 @@
+<div>
+  <p>Locations (list of coordinates)</p>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <th>#</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        @for (coordinate of coordinates; track coordinate.id) {
+          <tr>
+            <td>{{ coordinate.id }}</td>
+            <td>{{ coordinate.latitude }}°</td>
+            <td>{{ coordinate.longitude }}°</td>
+            <td>
+              <button
+                class="btn btn-outline-danger btn-sm border-0"
+                (click)="onDelete(coordinate.id)"
+                [disabled]="loading"
+                aria-label="Delete coordinate"
+                title="Delete"
+              >
+                @if (loading) {
+                  <span
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  ></span>
+                } @else {
+                  <i class="bi bi-trash"></i>
+                }
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" class="text-muted py-3">
+              No coordinates recorded yet.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

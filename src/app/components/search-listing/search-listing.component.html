@@ -1,0 +1,167 @@
+<section class="container my-4">
+  <div id="title" class="col-12 col-md-8 col-lg-9 mb-3 py-2">
+    <h2>Search Species</h2>
+  </div>
+
+  <!-- Search Bar -->
+  <div id="searchBar" class="row g-3 align-items-start">
+    <div class="col-12">
+      <form action="" class="d-flex flex-nowrap gap-2 align-items-center">
+        <input
+          type="text"
+          name="textSearch"
+          placeholder="Type your search here..."
+          class="form-control flex"
+          style="min-width: 120px"
+          required
+          [(ngModel)]="formData.textSearch"
+        />
+
+        <button type="button" class="btn btn-primary flex-shrink-0" (click)="search()">Apply</button>
+        <button type="button" class="btn btn-danger flex-shrink-0" (click)="clearSearch()">Clear</button>
+      </form>
+    </div>
+
+    <div class="col-12">
+      <div class="d-flex flex-wrap align-items-center gap-2">
+        <label for="statusSelector" class="form-label mb-0">Filter by status</label>
+        <select
+          name="statusSelector"
+          id="statusSelector"
+          class="form-select"
+          style="width: 180px"
+          [(ngModel)]="formData.status"
+        >
+          <option value="" selected>Status</option>
+          <option *ngFor="let status of statusList" [value]="status">
+            {{ status }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div id="table-species" class="row mt-4">
+    <div class="col-12">
+      <div class="table-responsive rounded-4 bg-light-subtle p-2">
+        <table
+          class="table table-light table-striped table-hover text-center align-middle mb-0"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Scientific Name</th>
+              <th scope="col">Family</th>
+              <th scope="col">Genus</th>
+              <th scope="col">Common Name</th>
+              <th scope="col">Locations</th>
+              <th scope="col">Status</th>
+              <th scope="col">Thumbnail</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (loading) {
+              <tr>
+                <td colspan="8" class="text-center py-5">
+                  <div
+                    class="spinner-border text-primary"
+                    role="status"
+                    style="width: 3rem; height: 3rem"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <p class="text-muted mt-3">
+                    <strong>Waking up the server...</strong>
+                  </p>
+                  <p class="text-muted small">
+                    This prototype is hosted on render on a free tier.
+                    The server might be spinning up after inactivity. 
+                    This may take a few minutes. 
+                    If it takes too long, refresh the page
+                  </p>
+                  <div
+                    class="progress mx-auto"
+                    style="height: 4px; max-width: 300px"
+                  >
+                    <div
+                      class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+                      role="progressbar"
+                      style="width: 100%"
+                      aria-valuenow="100"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </td>
+              </tr>
+            } @else if (error) {
+              <tr>
+                <td colspan="7" class="text-center py-4">
+                  <div
+                    class="alert alert-danger mb-0 d-inline-block"
+                    role="alert"
+                  >
+                    <i
+                      class="bi bi-exclamation-triangle-fill fs-4 d-block mb-2"
+                    ></i>
+                    <strong>{{ error }}</strong>
+                    <p class="mt-2 small mb-0">
+                      This may happen if the server is still starting up. Please
+                      try again.
+                    </p>
+                  </div>
+                </td>
+              </tr>
+            } @else {
+              @for (specie of filteredSpecies; track specie.id) {
+                <tr>
+                  <td class="fw-normal">{{ specie.scientificName }}</td>
+                  <td>{{ specie.family }}</td>
+                  <td>{{ specie.genus }}</td>
+                  <td>{{ specie.commonName }}</td>
+                  <td>
+                    <span class="badge bg-secondary"
+                      ><i class="bi bi-geo-alt-fill me-1"></i>{{ specie.coordinates.length }}</span
+                    >
+                  </td>
+                  <td>
+                    <span class="badge bg-info">
+                      {{ specie.status }}</span
+                    >
+                  </td>
+                  <td>
+                    <img
+                      class="imageThumbnail"
+                      [src]="specie.imageUrl ? specie.imageUrl : noImageUrl"
+                      (error)="onImageError($event)"
+                      alt="Image for {{ specie.commonName }}"
+                    />
+                  </td>
+                  <td>
+                    <a
+                      class="btn btn-outline-primary btn-sm mx-1"
+                      [routerLink]="['edit/', specie.id]"
+                      aria-label="Edit"
+                      title="Edit"
+                    >
+                      <i class="bi bi-pencil"></i>
+                    </a>
+                    <button
+                      class="btn btn-outline-danger btn-sm mx-1"
+                      (click)="deleteSpecies(specie.id)"
+                      aria-label="Delete"
+                      title="Delete"
+                    >
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

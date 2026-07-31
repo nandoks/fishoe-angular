@@ -1,0 +1,50 @@
+<form #coordForm="ngForm" class="row g-2">
+  <div class="col-12 col-sm-5">
+    <input
+      type="number"
+      name="latitude"
+      class="form-control"
+      placeholder="Latitude"
+      [(ngModel)]="latitude"
+      step="0.001"
+      min="-180"
+      max="180"
+      required
+      #lat="ngModel"
+    />
+    @if (lat.invalid && lat.touched) {
+      <div class="text-danger small mt-1">
+        Latitude must be between -180 and 180.
+      </div>
+    }
+  </div>
+  <div class="col-12 col-sm-5">
+    <input
+      type="number"
+      name="longitude"
+      class="form-control"
+      placeholder="Longitude"
+      [(ngModel)]="longitude"
+      step="0.001"
+      min="-180"
+      max="180"
+      required
+      #lng="ngModel"
+    />
+    @if (lng.invalid && lng.touched) {
+      <div class="text-danger small mt-1">
+        Longitude must be between -180 and 180.
+      </div>
+    }
+  </div>
+  <div class="col-12 col-sm-2">
+    <button
+      type="button"
+      class="btn btn-success w-100"
+      (click)="onAdd()"
+      [disabled]="coordForm.invalid"
+    >
+      Add
+    </button>
+  </div>
+</form>

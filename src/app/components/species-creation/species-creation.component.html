@@ -1,0 +1,137 @@
+<section class="container my-4">
+  <div class="row g-3 px-3 bg-white">
+    <div class="col-12 col-md-8 col-lg-9 py-2">
+      <h2>Add a new Species</h2>
+      <span class="text-muted small">
+        The pre-filled values are placeholders for tests, so it goes faster to add a new species, you can change it to whatever you like.
+      </span>
+    </div>
+    @if (error) {
+      <div class="col-12">
+        <div class="alert alert-danger" role="alert">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          <strong>{{ error }}</strong>
+          <button
+            type="button"
+            class="btn-close float-end"
+            (click)="error = null"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
+    }
+    @if (saving) {
+      <div class="col-12 text-center py-5">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="text-muted mt-3">Creating species... Please wait.</p>
+        <div class="progress mx-auto" style="height: 4px; max-width: 300px">
+          <div
+            class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+            role="progressbar"
+            style="width: 100%"
+            aria-valuenow="100"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
+        </div>
+      </div>
+    } @else {
+      <form class="py-2">
+        <div class="mb-3">
+          <label class="fw-semibold" for="scientificNameInput">Scientific Name</label>
+          <input
+            type="text"
+            name="scientificNameInput"
+            id="scientificNameInput"
+            class="form-control"
+            [(ngModel)]="formData.scientificName"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="fw-semibold" for="commonNameInput">Common Name</label>
+          <input
+            type="text"
+            name="commonNameInput"
+            id="commonNameInput"
+            class="form-control"
+            [(ngModel)]="formData.commonName"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="fw-semibold" for="descriptionInput">Description</label>
+          <textarea
+            name="descriptionInput"
+            id="descriptionInput"
+            class="form-control"
+            rows="4"
+            [(ngModel)]="formData.description"
+          ></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="fw-semibold" for="distributionNotesInput">Distribution notes</label>
+          <textarea
+            name="distributionNotesInput"
+            id="distributionNotesInput"
+            class="form-control"
+            rows="4"
+            [(ngModel)]="formData.distributionNotes"
+          ></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="familyInput" class="fw-semibold">Family</label>
+          <input
+            name="familyInput"
+            id="familyInput"
+            class="form-control"
+            [(ngModel)]="formData.family"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="fw-semibold" for="genusInput">Genus</label>
+          <input
+            name="genusInput"
+            id="genusInput"
+            class="form-control"
+            [(ngModel)]="formData.genus"
+          />
+        </div>
+
+        <div class="mb-3" id="imageEdit">
+          <label class="fw-semibold" for="urlInput">Image URL</label>
+          <input
+            class="form-control"
+            name="urlInput"
+            id="urlInput"
+            type="text"
+            [(ngModel)]="formData.imageUrl"
+          />
+          <img
+            class="img-fluid m-3 speciesImage"
+            [src]="formData.imageUrl || 'https://dummyimage.com/180x180/cccccc/ffffff&text=No+Image'"
+            alt="Species image preview"
+          />
+        </div>
+
+        <div class="d-flex flex-wrap gap-2 justify-content-center mt-4">
+          <button
+            type="button"
+            (click)="onSave()"
+            class="btn btn-success"
+            [disabled]="!formData.scientificName"
+          >
+            Save
+          </button>
+          <button routerLink="" class="btn btn-danger">Cancel</button>
+        </div>
+      </form>
+    }
+  </div>
+</section>
