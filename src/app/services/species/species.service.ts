@@ -3,12 +3,13 @@ import { Apollo } from 'apollo-angular';
 import { Species } from '../../models/species';
 import {
   CreateSpeciesInput,
+  SearchSpeciesResult,
   SpeciesByIdResult,
   SpeciesQueryResult,
   UpdateSpeciesInput,
   UpdateSpeciesResult,
 } from '../../graphql/interfaces';
-import { getAllSpeciesQuery, getSpeciesByIdQuery } from '../../graphql/queries';
+import { getAllSpeciesQuery, getSpeciesByIdQuery, searchSpecies } from '../../graphql/queries';
 import { map, Observable } from 'rxjs';
 import {
   createSpeciesMutation,
@@ -33,7 +34,6 @@ export class SpeciesService {
       })
       .pipe(
         map((result) => {
-          console.log('Species data:', result.data?.species);
           return result.data?.species || [];
         }),
       );
@@ -108,12 +108,24 @@ export class SpeciesService {
       .pipe(
         map((result) => {
           const species = result.data?.createSpecies;
-          console.log(result.data)
           if (!species) {
             throw new Error('Something went wrong. No species returned from creation');
           }
           return species.id;
         }),
       );
+  }
+
+  searchSpecies(text: string): Observable<Species[]>{
+    return this.apollo
+    .query<SearchSpeciesResult>({
+      query: searchSpecies,
+      variables: { textInput: text },
+    })
+    .pipe(
+      map((result) => {
+        return result.data?.searchSpecies || []
+      })
+    )
   }
 }

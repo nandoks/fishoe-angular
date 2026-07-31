@@ -41,3 +41,24 @@ export const getSpeciesByIdQuery = gql`
     }
   }
 `;
+
+export const searchSpecies = gql`
+  query SearchSpecies($textInput: String!){
+    searchSpecies(textInput: $textInput) {
+      id
+      commonName
+      description
+      distributionNotes
+      family
+      genus
+      imageUrl
+      status
+      scientificName
+      coordinates {
+        id
+        latitude
+        longitude
+      }
+    }
+  }
+`;

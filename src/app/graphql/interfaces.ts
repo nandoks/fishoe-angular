@@ -20,7 +20,7 @@ export interface UpdateSpeciesInput {
   genus?: string;
   distributionNotes?: string;
   description?: string;
-  status?: Status,
+  status?: Status;
   imageUrl?: string;
 }
 
@@ -32,4 +32,8 @@ export interface CreateSpeciesInput {
   distributionNotes: string;
   description: string;
   imageUrl?: string;
+}
+
+export interface SearchSpeciesResult {
+  searchSpecies: Species[];
 }

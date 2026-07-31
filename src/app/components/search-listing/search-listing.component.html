@@ -13,23 +13,31 @@
           placeholder="Type your search here..."
           class="form-control flex"
           style="min-width: 120px"
+          required
+          [(ngModel)]="formData.textSearch"
         />
 
+        <button type="button" class="btn btn-primary flex-shrink-0" (click)="search()">Apply</button>
+        <button type="button" class="btn btn-danger flex-shrink-0" (click)="clearSearch()">Clear</button>
+      </form>
+    </div>
+
+    <div class="col-12">
+      <div class="d-flex flex-wrap align-items-center gap-2">
+        <label for="statusSelector" class="form-label mb-0">Filter by status</label>
         <select
           name="statusSelector"
           id="statusSelector"
-          class="form-select flex-grow-0"
-          style="width: 150px; flex-shrink: 0"
+          class="form-select"
+          style="width: 180px"
+          [(ngModel)]="formData.status"
         >
           <option value="" selected>Status</option>
           <option *ngFor="let status of statusList" [value]="status">
             {{ status }}
           </option>
         </select>
-
-        <button class="btn btn-primary flex-shrink-0">Apply</button>
-        <button class="btn btn-danger flex-shrink-0">Clear</button>
-      </form>
+      </div>
     </div>
   </div>
 
@@ -44,6 +52,7 @@
             <tr>
               <th scope="col">Scientific Name</th>
               <th scope="col">Family</th>
+              <th scope="col">Genus</th>
               <th scope="col">Common Name</th>
               <th scope="col">Locations</th>
               <th scope="col">Status</th>
@@ -103,10 +112,11 @@
                 </td>
               </tr>
             } @else {
-              @for (specie of species; track specie.id) {
+              @for (specie of filteredSpecies; track specie.id) {
                 <tr>
                   <td class="fw-normal">{{ specie.scientificName }}</td>
                   <td>{{ specie.family }}</td>
+                  <td>{{ specie.genus }}</td>
                   <td>{{ specie.commonName }}</td>
                   <td>
                     <span class="badge bg-secondary"

@@ -1,22 +1,16 @@
-import {
-  Component,
-  EventEmitter,
-  inject,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { Species } from '../../models/species';
 import { NgFor } from '@angular/common';
 import { Apollo } from 'apollo-angular';
 import { SpeciesService } from '../../services/species/species.service';
 import { filter, Subject, takeUntil } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 import { Status } from '../../models/enums';
 
 @Component({
   selector: 'app-search-listing',
-  imports: [RouterLink, NgFor],
+  imports: [RouterLink, FormsModule, NgFor],
   templateUrl: './search-listing.component.html',
   styleUrl: './search-listing.component.scss',
 })
@@ -28,8 +22,17 @@ export class SearchListingComponent implements OnInit, OnDestroy {
 
   loading = false;
   error: string | null = null;
-  species: Species[] | undefined = [];
+  species: Species[] = [];
   statusList = Object.values(Status);
+
+  get filteredSpecies(): Species[] {
+    return this.formData.status
+      ? this.species.filter(
+          (specie) => specie.status === this.formData.status,
+        )
+      : this.species;
+  }
+
   ngOnInit(): void {
     this.loadSpecies();
     this.router.events
@@ -78,11 +81,41 @@ export class SearchListingComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (succes) => {
           if (succes) {
-            this.species = this.species?.filter(
+            this.species = this.species.filter(
               (specie) => specie.id !== speciesId,
             );
           }
         },
       });
+  }
+
+  formData: { textSearch: string; status: Status | string } = {
+    textSearch: '',
+    status: '',
+  };
+
+  search() {
+    this.loading = true;
+    this.speciesService
+      .searchSpecies(this.formData.textSearch)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          this.species = data;
+          this.loading = false;
+        },
+        error: (err) => {
+          this.error =
+            'Failed to load species. Server might be waking up. check logs';
+          console.error('Error loading species:', err);
+          this.loading = false;
+        },
+      });
+  }
+
+  clearSearch() {
+    this.formData.textSearch = '';
+    this.formData.status = '';
+    this.loadSpecies();
   }
 }
