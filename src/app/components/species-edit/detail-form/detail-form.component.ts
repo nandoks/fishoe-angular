@@ -24,6 +24,7 @@ export class DetailFormComponent implements OnChanges {
   @Output() updateSpecies = new EventEmitter<UpdateSpeciesInput>();
   formData: Species | null = null;
   statusList = Object.values(Status);
+  imageError = false;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['specie'] && this.specie) {
@@ -33,7 +34,12 @@ export class DetailFormComponent implements OnChanges {
           ? [...this.specie.coordinates]
           : [],
       };
+      this.imageError = false;
     }
+  }
+
+  onImageError(): void {
+    this.imageError = true;
   }
   onSave(): void {
     if (!this.formData) return;

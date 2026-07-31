@@ -24,6 +24,11 @@ export class SearchListingComponent implements OnInit, OnDestroy {
   error: string | null = null;
   species: Species[] = [];
   statusList = Object.values(Status);
+  noImageUrl = 'https://dummyimage.com/180x180/c0392b/ffffff&text=No-Image';
+
+  onImageError(event: Event): void {
+    (event.target as HTMLImageElement).src = this.noImageUrl;
+  }
 
   get filteredSpecies(): Species[] {
     return this.formData.status

@@ -131,7 +131,8 @@
                   <td>
                     <img
                       class="imageThumbnail"
-                      [src]="specie.imageUrl ? specie.imageUrl : 'https://dummyimage.com/180x180/c0392b/ffffff&text=No-Image'"
+                      [src]="specie.imageUrl ? specie.imageUrl : noImageUrl"
+                      (error)="onImageError($event)"
                       alt="Image for {{ specie.commonName }}"
                     />
                   </td>
